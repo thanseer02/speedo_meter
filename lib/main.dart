@@ -9,9 +9,16 @@ import 'package:speedtrack/core/dependency_injection.dart';
 import 'package:speedtrack/viewmodels/tracking_viewmodel.dart';
 import 'package:speedtrack/viewmodels/history_viewmodel.dart';
 import 'package:speedtrack/viewmodels/settings_viewmodel.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Enforce Portrait Orientation for Splash/Auth/Onboarding initially
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  
   await setupDependencyInjection();
   
   runApp(

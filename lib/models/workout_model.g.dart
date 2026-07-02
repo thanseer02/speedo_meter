@@ -21,9 +21,9 @@ class WorkoutModelAdapter extends TypeAdapter<WorkoutModel> {
       startTime: fields[1] as DateTime,
       endTime: fields[2] as DateTime?,
       distance: fields[3] as double,
-      duration: fields[4] as Duration,
-      movingTime: fields[5] as Duration,
-      pauseTime: fields[6] as Duration,
+      durationMs: fields[4] as int,
+      movingTimeMs: fields[5] as int,
+      pauseTimeMs: fields[6] as int,
       averageSpeed: fields[7] as double,
       maxSpeed: fields[8] as double,
       minSpeed: fields[9] as double,
@@ -49,11 +49,11 @@ class WorkoutModelAdapter extends TypeAdapter<WorkoutModel> {
       ..writeByte(3)
       ..write(obj.distance)
       ..writeByte(4)
-      ..write(obj.duration)
+      ..write(obj.durationMs)
       ..writeByte(5)
-      ..write(obj.movingTime)
+      ..write(obj.movingTimeMs)
       ..writeByte(6)
-      ..write(obj.pauseTime)
+      ..write(obj.pauseTimeMs)
       ..writeByte(7)
       ..write(obj.averageSpeed)
       ..writeByte(8)

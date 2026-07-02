@@ -20,13 +20,13 @@ class WorkoutModel {
   final double distance;
 
   @HiveField(4)
-  final Duration duration;
+  final int durationMs;
 
   @HiveField(5)
-  final Duration movingTime;
+  final int movingTimeMs;
 
   @HiveField(6)
-  final Duration pauseTime;
+  final int pauseTimeMs;
 
   @HiveField(7)
   final double averageSpeed;
@@ -60,9 +60,9 @@ class WorkoutModel {
     required this.startTime,
     this.endTime,
     this.distance = 0.0,
-    this.duration = Duration.zero,
-    this.movingTime = Duration.zero,
-    this.pauseTime = Duration.zero,
+    this.durationMs = 0,
+    this.movingTimeMs = 0,
+    this.pauseTimeMs = 0,
     this.averageSpeed = 0.0,
     this.maxSpeed = 0.0,
     this.minSpeed = 0.0,
@@ -77,15 +77,19 @@ class WorkoutModel {
   /// True if the workout is currently ongoing (end time is null).
   bool get isActive => endTime == null;
 
+  Duration get duration => Duration(milliseconds: durationMs);
+  Duration get movingTime => Duration(milliseconds: movingTimeMs);
+  Duration get pauseTime => Duration(milliseconds: pauseTimeMs);
+
   /// Returns a copy of this workout with updated fields.
   WorkoutModel copyWith({
     String? id,
     DateTime? startTime,
     DateTime? endTime,
     double? distance,
-    Duration? duration,
-    Duration? movingTime,
-    Duration? pauseTime,
+    int? durationMs,
+    int? movingTimeMs,
+    int? pauseTimeMs,
     double? averageSpeed,
     double? maxSpeed,
     double? minSpeed,
@@ -101,9 +105,9 @@ class WorkoutModel {
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       distance: distance ?? this.distance,
-      duration: duration ?? this.duration,
-      movingTime: movingTime ?? this.movingTime,
-      pauseTime: pauseTime ?? this.pauseTime,
+      durationMs: durationMs ?? this.durationMs,
+      movingTimeMs: movingTimeMs ?? this.movingTimeMs,
+      pauseTimeMs: pauseTimeMs ?? this.pauseTimeMs,
       averageSpeed: averageSpeed ?? this.averageSpeed,
       maxSpeed: maxSpeed ?? this.maxSpeed,
       minSpeed: minSpeed ?? this.minSpeed,

@@ -19,11 +19,35 @@ class AppTypography {
         letterSpacing: -0.5,
       );
 
-  static TextStyle get heading2 => GoogleFonts.outfit(
-        fontSize: 24,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary,
-      );
+  static const TextStyle heading2 = TextStyle(
+    fontSize: 24.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle heading3 = TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle body = TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle bodyMedium = TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textPrimary,
+  );
+
+  static const TextStyle bodySmall = TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textPrimary,
+  );
 
   static TextStyle get body1 => GoogleFonts.outfit(
         fontSize: 16,

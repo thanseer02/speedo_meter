@@ -91,6 +91,10 @@ class TrackingRepositoryImpl implements TrackingRepository {
 
   @override
   WorkoutModel? recoverActiveWorkout() {
-    return _storageService.getActiveWorkout();
+    final recovered = _storageService.getActiveWorkout();
+    if (recovered != null) {
+      _activeWorkout = recovered;
+    }
+    return recovered;
   }
 }
