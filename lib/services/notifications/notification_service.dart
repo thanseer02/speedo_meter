@@ -11,11 +11,26 @@ class NotificationService {
 
   Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('app_icon');
     const InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
     );
     await _plugin.initialize(settings: initializationSettings);
+
+    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+        _plugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+
+    if (androidImplementation != null) {
+      await androidImplementation.createNotificationChannel(
+        const AndroidNotificationChannel(
+          channelId,
+          channelName,
+          description: 'Maintains background location tracking',
+          importance: Importance.low,
+        ),
+      );
+    }
   }
 
   /// Show the non-dismissible ongoing notification.

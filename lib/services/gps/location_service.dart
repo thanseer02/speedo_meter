@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:geolocator/geolocator.dart';
 import 'package:speedtrack/core/logger/log_helper.dart';
 import 'package:speedtrack/exceptions/app_exceptions.dart';
@@ -13,12 +14,28 @@ class LocationService {
   }) {
     LogHelper.i('Starting GPS tracking stream...');
     
-    return Geolocator.getPositionStream(
-      locationSettings: LocationSettings(
+    LocationSettings settings;
+    if (Platform.isAndroid) {
+      settings = AndroidSettings(
         accuracy: accuracy,
         distanceFilter: distanceFilter,
-      ),
-    ).map((Position position) {
+        forceLocationManager: true,
+      );
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      settings = AppleSettings(
+        accuracy: accuracy,
+        distanceFilter: distanceFilter,
+        activityType: ActivityType.fitness,
+        pauseLocationUpdatesAutomatically: false,
+      );
+    } else {
+      settings = LocationSettings(
+        accuracy: accuracy,
+        distanceFilter: distanceFilter,
+      );
+    }
+
+    return Geolocator.getPositionStream(locationSettings: settings).map((Position position) {
       return LocationPoint(
         latitude: position.latitude,
         longitude: position.longitude,

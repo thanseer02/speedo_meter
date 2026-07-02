@@ -37,10 +37,10 @@ class BackgroundTrackingService {
         onStart: onBackgroundStart,
         autoStart: false,
         isForegroundMode: true,
-        notificationChannelId: 'workout_channel',
         initialNotificationTitle: 'SpeedTrack',
         initialNotificationContent: 'Preparing tracking...',
         foregroundServiceNotificationId: 888,
+        foregroundServiceTypes: [AndroidForegroundType.location],
       ),
       iosConfiguration: IosConfiguration(
         autoStart: false,

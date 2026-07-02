@@ -4,6 +4,7 @@ import 'package:speedtrack/enums/activity_type.dart';
 import 'package:speedtrack/models/goal_model.dart';
 import 'package:speedtrack/models/location_point.dart';
 import 'package:speedtrack/models/workout_model.dart';
+import 'package:speedtrack/models/adapters/duration_adapter.dart';
 import 'package:speedtrack/exceptions/app_exceptions.dart';
 
 /// Centralized service for persisting data locally using Hive.
@@ -17,6 +18,7 @@ class StorageService {
       await Hive.initFlutter();
       
       // Register all generated adapters
+      Hive.registerAdapter(DurationAdapter());
       Hive.registerAdapter(ActivityTypeAdapter());
       Hive.registerAdapter(LocationPointAdapter());
       Hive.registerAdapter(GoalTypeAdapter());
