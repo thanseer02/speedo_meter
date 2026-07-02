@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'core/di/locator.dart';
-import 'core/theme/app_theme.dart';
-import 'routes/app_router.dart';
+import 'package:speedtrack/utils/themes.dart';
+import 'package:speedtrack/providers/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize dependency injection
-  await setupLocator();
-  
   runApp(const SpeedTrackApp());
 }
 
@@ -19,19 +15,46 @@ class SpeedTrackApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // We will inject Providers here in the future.
     return MultiProvider(
       providers: [
-        // Placeholder for global providers.
-        Provider.value(value: null),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp.router(
-        title: 'SpeedTrack',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        routerConfig: AppRouter.router,
-        debugShowCheckedModeBanner: false,
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return ScreenUtilInit(
+            designSize: const Size(390, 844), // Standard iPhone dimension
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                title: 'SpeedTrack',
+                theme: appLightTheme,
+                darkTheme: appDarkTheme,
+                themeMode: themeProvider.themeMode,
+                debugShowCheckedModeBanner: false,
+                home: Scaffold(
+                  appBar: AppBar(title: const Text('SpeedTrack')),
+                  body: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('SpeedTrack Restructured Successfully'),
+                        const SizedBox(height: 20),
+                        SwitchListTile(
+                          title: const Text('Dark Mode'),
+                          value: themeProvider.themeMode == ThemeMode.dark,
+                          onChanged: (isDark) {
+                            themeProvider.toggleTheme(isDark);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
